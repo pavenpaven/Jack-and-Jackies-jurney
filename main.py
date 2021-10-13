@@ -3,7 +3,7 @@ import tile_types
 
 window = pygame.display.set_mode((900,600))
 
-tile=60
+tile=30
 
 imag = pygame.image.load("Art/Flower_1.png")
 imag = pygame.transform.scale(imag, (tile, tile))
@@ -20,7 +20,7 @@ def graphics():
 def check_key(framecount,last_pressed):
   keys = pygame.key.get_pressed()
   pygame.key.set_repeat(1, 100000000)
-  if last_pressed+1 < framecount:
+  if True:
     if keys[pygame.K_a] or keys[pygame.K_LEFT]:
       last_pressed=framecount
       jack.walk((-1,0))
@@ -57,6 +57,7 @@ class Map:
             self.tiles.append(row_tiles)
     
     def render(self):
+        self.surface.fill((0,0,0))
         y = 0
         for i in self.tiles:
             x = 0
@@ -64,6 +65,7 @@ class Map:
                 self.surface.blit(tile_types.Tile_type.types[f].texture, (x,y))
                 x += tile
             y += tile
+        self.surface.blit(jack.texture, jack.pos)
         window.blit(self.surface, self.pos)
             
             
@@ -79,12 +81,15 @@ class Player:
     self.texture = pygame.transform.scale(imag, (proporsion[0], proporsion[1]))
 
   def render(self):
-    window.blit(self.texture, self.pos)
+    pass
   
   def walk(self, vector):
     self.pos=(self.pos[0]+vector[0]*2, self.pos[1]+vector[1]*2)
 
 jack = Player((30,30), "Art/jack.png", (20,28))
+
+def get_touching_tiles(rect, ):
+    pass
 
 def main():
   running = True
@@ -92,8 +97,10 @@ def main():
   framecount = 0
   last_pressed = 0 
   while running:
-    clock.tick(60)
+    clock.tick(30)
     framecount+=1
+    if framecount % 60 == 0:
+        print(clock.get_fps())
     graphics()
     last_pressed=check_key(framecount, last_pressed)
     for event in pygame.event.get():
