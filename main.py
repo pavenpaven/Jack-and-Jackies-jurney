@@ -1,5 +1,6 @@
 import pygame
 import tile_types
+import math
 
 window = pygame.display.set_mode((900,600))
 
@@ -21,18 +22,21 @@ def check_key(framecount,last_pressed):
   keys = pygame.key.get_pressed()
   pygame.key.set_repeat(1, 100000000)
   if True:
+    vec = [0, 0]
     if keys[pygame.K_a] or keys[pygame.K_LEFT]:
       last_pressed=framecount
-      jack.walk((-1,0))
+      vec[0]+=-1
     if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
       last_pressed=framecount
-      jack.walk((1,0))
+      vec[0]+=1
     if keys[pygame.K_w] or keys[pygame.K_UP]:
       last_pressed=framecount
-      jack.walk((0,-1))
+      vec[1] +=-1
     if keys[pygame.K_s] or keys[pygame.K_DOWN]:
       last_pressed=framecount
-      jack.walk((0,1))
+      vec[1] +=1
+    if vec[0] or vec[1]:
+        jack.walk(vec)
   return last_pressed
       
 
@@ -75,8 +79,10 @@ scene.load_room("Level/test.txt")
 print(scene.tiles)
 
 class Player:
-  def __init__(self, pos, filename, proporsion):
+  def __init__(self, pos, filename, proporsion, speed):
     self.pos = pos
+    self.speed = speed
+    self.size = proporsion
     imag = pygame.image.load(filename)
     self.texture = pygame.transform.scale(imag, (proporsion[0], proporsion[1]))
 
@@ -84,17 +90,26 @@ class Player:
     pass
   
   def walk(self, vector):
-    self.pos=(self.pos[0]+vector[0]*2, self.pos[1]+vector[1]*2)
+    if vector[0] and vector[1]:
+        vector[0] *= math.sqrt(2)/2
+        vector[1] *= math.sqrt(2)/2 # just dont ansk
+    travel_pos = (self.pos[0] + vector[0]*self.speed , self.pos[1]+vector[1]*self.speed)
+    player_hitbox = (travel_pos, (travel_pos[0] + self.size[0], travel_pos[1] + self.size[1]))
+    tiles = get_touching_tiles(player_hitbox, scene)
+    can_go = True
+    for i in tiles:
+        if tile_types.Tile_type.types[scene.tiles[i[1]][i[0]]].collision:
+            can_go = False
+    if can_go:
+        self.pos = travel_pos
 
-jack = Player((30,30), "Art/jack.png", (20,28))
+jack = Player((30,30), "Art/jack.png", (20,28), 3)
 
 def get_touching_tiles(rect, sce): #sce for scene idk why
     out = []
-    points = rect
-    points.append((rect[0][0], rect[1][1]))
-    points.append((rect[1][0], rect[0][1]))
+    points = [rect[0], rect[1], (rect[0][0], rect[1][1]), (rect[1][0], rect[0][1])]
     for i in points:
-        append((math.trunc(i[0]*tile),math.trunc(i[1]*tile)))
+        out.append((math.trunc(i[0]/tile), math.trunc(i[1]/tile)))
     return out
 
 def main():
@@ -102,7 +117,7 @@ def main():
   clock = pygame.time.Clock()
   framecount = 0
   last_pressed = 0 
-#  print(get_touching_tiles(((30,30),(40,40)), scene))
+  print(get_touching_tiles(((30,30),(70,100)), scene))
   while running:
     clock.tick(30)
     framecount+=1
