@@ -70,7 +70,7 @@ class Map:
             
             
     
-scene = Map((10,10), (tile*5, tile*2))
+scene = Map((15,12), (tile*5, tile*2))
 scene.load_room("Level/test.txt")
 print(scene.tiles)
 
@@ -88,14 +88,21 @@ class Player:
 
 jack = Player((30,30), "Art/jack.png", (20,28))
 
-def get_touching_tiles(rect, ):
-    pass
+def get_touching_tiles(rect, sce): #sce for scene idk why
+    out = []
+    points = rect
+    points.append((rect[0][0], rect[1][1]))
+    points.append((rect[1][0], rect[0][1]))
+    for i in points:
+        append((math.trunc(i[0]*tile),math.trunc(i[1]*tile)))
+    return out
 
 def main():
   running = True
   clock = pygame.time.Clock()
   framecount = 0
   last_pressed = 0 
+#  print(get_touching_tiles(((30,30),(40,40)), scene))
   while running:
     clock.tick(30)
     framecount+=1
