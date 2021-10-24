@@ -1,6 +1,6 @@
 import pygame
 
-tile=60
+tile=30
 
 def no_stepfunc():
     pass
@@ -24,7 +24,12 @@ class Tile_type:
             if i.letter == letter:
                 return i
         k # letter not found
+    def find_letter(index):
+        return __class__.types[index].letter
 
-Pine_type = Tile_type("Art/Pine_1.png", True, "p")
+Pine_type = Tile_type("Art/pine_2.png", True, "p")
 jack_type = Tile_type("Art/jack.png", False, "j")
-grass_tile_type = Tile_type("Art/tile_1.png", False, "g")
+grass_tile_type = Tile_type("Art/grass_2.png", False, "g")
+sand_tile_type = Tile_type("Art/tile_3.png", False, "S")
+path = Tile_type("Art/path_1.png", False, "-")
+Tile_type("Art/path_2.png", False, "k")

@@ -44,6 +44,8 @@ class Map:
     def __init__(self, size, pos): #size is a tuple
         self.size = size
         self.pos = pos
+        #texture= pygame.image.load(backgrund_filename)
+        #self.backgrund_tile = pygame.transform.scale(texture,size)
         self.surface = pygame.Surface((size[0]*tile, size[1]*tile))
         self.tiles = []
     
@@ -62,6 +64,7 @@ class Map:
     
     def render(self):
         self.surface.fill((0,0,0))
+        #self.surface.blit(self.backgrund_tile, (0,0))
         y = 0
         for i in self.tiles:
             x = 0
@@ -74,7 +77,7 @@ class Map:
             
             
     
-scene = Map((15,12), (tile*5, tile*2))
+scene = Map((30,12), (0, tile*2))
 scene.load_room("Level/test.txt")
 print(scene.tiles)
 
