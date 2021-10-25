@@ -78,7 +78,7 @@ class Map:
             
     
 scene = Map((30,12), (0, tile*2))
-scene.load_room("Level/test.txt")
+scene.load_room("Level/test1")
 print(scene.tiles)
 
 class Player:

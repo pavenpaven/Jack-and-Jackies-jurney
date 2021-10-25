@@ -5,6 +5,9 @@ tile=30
 def no_stepfunc():
     pass
 
+def rotate_tile():
+    pass
+
 class Tile_type:
     types_length=0
     types=[]
@@ -19,6 +22,7 @@ class Tile_type:
         self.letter = letter
         self.stepfunc = stepfunc
         __class__.types.append(self)
+
     def find(letter):
         for i in __class__.types:
             if i.letter == letter:
@@ -33,3 +37,6 @@ grass_tile_type = Tile_type("Art/grass_2.png", False, "g")
 sand_tile_type = Tile_type("Art/tile_3.png", False, "S")
 path = Tile_type("Art/path_1.png", False, "-")
 Tile_type("Art/path_2.png", False, "k")
+Tile_type("Art/path_up", False, "o")
+Tile_type("Art/path_3", False, "e")
+Tile_type("Art/path_4", False, "i")

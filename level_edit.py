@@ -179,8 +179,9 @@ def creat_segment(filename, segname):
 
 def merge_file():
     pass
-  
 
+def list_segnames():
+    pass
 def main():
 	parse_args(sys.argv, len(sys.argv))
 
