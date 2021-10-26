@@ -77,10 +77,15 @@ def open_level_edit(filename, segname):
             segments = get_segname_room(filename, segname)
             row = segments[1].split("\n")
             self.tiles=[]
+            u=0
             for i in row:
                 row_tiles = []
                 for f in i:
-                    row_tiles.append(tile_types.Tile_type.find(f).index)
+                    if f[0] == "1" or f[0] == "2" or f[0] == "3":
+                        u = int(f[0])
+                    else:
+                        row_tiles.append(tile_types.Tile_type.find(f).index - u)
+                        u = 0
                 self.tiles.append(row_tiles)
     
         def render(self):
@@ -140,7 +145,7 @@ def open_level_edit(filename, segname):
             else:
                 scene.tiles[self.pos[1]][self.pos[0]] = 0
 
-    curser = Curser((1,1), "Art/jack.png")
+    curser = Curser((1,1), "Art/curser.png")
     scene = Map((30,12), (0, tile*2))      
     scene.load_room(filename, segname)
     window = pygame.display.set_mode((900,600))

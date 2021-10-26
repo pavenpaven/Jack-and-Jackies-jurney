@@ -39,46 +39,86 @@ def check_key(framecount,last_pressed):
         jack.walk(vec)
   return last_pressed
       
-
-class Map:
-    def __init__(self, size, pos): #size is a tuple
-        self.size = size
-        self.pos = pos
-        #texture= pygame.image.load(backgrund_filename)
-        #self.backgrund_tile = pygame.transform.scale(texture,size)
-        self.surface = pygame.Surface((size[0]*tile, size[1]*tile))
-        self.tiles = []
-    
-    def load_room(self, filename):
-        fil = open(filename, "r")
+def get_segname_room(filename, segname):
+    with open(filename, "r") as fil:
         text = fil.read()
-        fil.close()
-        segments = text.split("#")
-        row = segments[1].split("\n")
-        self.tiles=[]
-        for i in row:
-            row_tiles = []
-            for f in i:
-                row_tiles.append(tile_types.Tile_type.find(f).index)
-            self.tiles.append(row_tiles)
+    return text
     
-    def render(self):
-        self.surface.fill((0,0,0))
-        #self.surface.blit(self.backgrund_tile, (0,0))
-        y = 0
-        for i in self.tiles:
-            x = 0
-            for f in i:
-                self.surface.blit(tile_types.Tile_type.types[f].texture, (x,y))
-                x += tile
-            y += tile
-        self.surface.blit(jack.texture, jack.pos)
-        window.blit(self.surface, self.pos)
+class Map:
+        def __init__(self, size, pos): #size is a tuple
+            self.size = size
+            self.pos = pos
+            #texture= pygame.image.load(backgrund_filename)
+            #self.backgrund_tile = pygame.transform.scale(texture,size)
+            self.surface = pygame.Surface((size[0]*tile, size[1]*tile))
+            self.tiles = []
+    
+        def load_room(self, filename, segname):
+            segments = get_segname_room(filename, segname)
+            segments = segments.split("#")
+            row = segments[1].split("\n")
+            self.tiles=[]
+            u=0
+            for i in row:
+                row_tiles = []
+                for f in i:
+                    if f[0] == "1" or f[0] == "2" or f[0] == "3":
+                        u = int(f[0])
+                    else:
+                        row_tiles.append(tile_types.Tile_type.find(f).index - u)
+                        u = 0
+                self.tiles.append(row_tiles)
+    
+        def render(self):
+            self.surface.fill((0,0,0))
+            #self.surface.blit(self.backgrund_tile, (0,0))
+            y = 0
+            for i in self.tiles:
+                x = 0
+                for f in i:
+                    self.surface.blit(tile_types.Tile_type.types[f].texture, (x,y))
+                    x += tile
+                y += tile
+            self.surface.blit(jack.texture, jack.pos)
+            window.blit(self.surface, self.pos)
+        
+        def save(self, filename, segname):
+            with open(filename, "r") as fil:
+                tex = fil.read()
+            n = 0
+            seg = tex.split("?") 
+            for i in seg:
+                if i.split("#")[0] == segname:
+                    break
+                n+=1
+            seg.pop(n)
+            room_info = segname + "#" + self.convert_to_letters() + "#"
+            seg.insert(n, room_info)
+            result = ""
+            b=0
+            for i in seg:
+                if not b == len(seg) -1:
+                    result += i + "?"
+                b+=1
+
+            with open(filename, "w") as fil:
+                fil.write(result)
+        
+        def convert_to_letters(self):
+            out = ""
+            n=0
+            for i in self.tiles:
+                for f in i:
+                    out += tile_types.Tile_type.find_letter(f)
+                if not n == len(self.tiles) -1:
+                    out += "\n"
+                n+=1
+            return out
             
             
     
 scene = Map((30,12), (0, tile*2))
-scene.load_room("Level/test1")
+scene.load_room("Level/test1", "test")
 print(scene.tiles)
 
 class Player:
