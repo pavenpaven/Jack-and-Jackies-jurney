@@ -24,10 +24,10 @@ class Tile_type:
         self.letter = letter
         self.stepfunc = stepfunc
         __class__.types.append(self)
-
         if rotate != 0:
+            print(rotate,letter, "tut")
             self.letter = str(rotate)+ letter
-            Tile_type(texture_filename, collision, letter, rotate -1)
+            Tile_type(texture_filename, collision, letter, rotate = rotate -1)
 
     def find(letter):
         for i in __class__.types:
