@@ -11,14 +11,15 @@ def rotate_tile():
 class Tile_type:
     types_length=0
     types=[]
-    def __init__(self, texture_filename, collision, letter, rotate=0, stepfunc=no_stepfunc):
+    def __init__(self, texture_filename, collision, letter, key = None, rotate=0, stepfunc=no_stepfunc):
         self.index = __class__.types_length
         __class__.types_length += 1
         
         untransformed_texture = pygame.image.load(texture_filename)
         self.texture = pygame.transform.scale(untransformed_texture, (tile, tile))
         self.texture = pygame.transform.rotate(self.texture, 90 * rotate)
-
+    
+        self.key = key
         self.collision = collision
         self.letter = letter
         self.stepfunc = stepfunc
@@ -37,11 +38,11 @@ class Tile_type:
     def find_letter(index):
         return __class__.types[index].letter
 
-Pine_type = Tile_type("Art/pine_2.png", True, "p")
+Pine_type = Tile_type("Art/pine_2.png", True, "p", key = pygame.K_p)
 jack_type = Tile_type("Art/jack.png", False, "j")
-grass_tile_type = Tile_type("Art/grass_2.png", False, "g")
+grass_tile_type = Tile_type("Art/grass_2.png", False, "g", key = pygame.K_g)
 sand_tile_type = Tile_type("Art/tile_3.png", False, "S")
-path = Tile_type("Art/path_1.png", False, "-", rotate=1)
+path = Tile_type("Art/path_1.png", False, "-", key = pygame.K_h, rotate=1)
 Tile_type("Art/path_2.png", False, "k", rotate=3)
 Tile_type("Art/path_3.png", False, "e", rotate=3)
 Tile_type("Art/path_4", False, "i")

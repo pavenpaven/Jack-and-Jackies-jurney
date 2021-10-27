@@ -53,6 +53,11 @@ def open_level_edit(filename, segname):
                     vec[1] += 1
                 if event.key == pygame.K_x:
                     curser.change_tile()
+                n=0
+                for j in tile_types.Tile_type.types:
+                    if event.key == j.key:
+                        scene.tiles[curser.pos[1]][curser.pos[0]] = n
+                    n+=1
                 curser.pos = (vec[0]+curser.pos[0], vec[1]+curser.pos[1])
                 last_pressed=framecount
             if event.type == pygame.QUIT:
@@ -144,6 +149,9 @@ def open_level_edit(filename, segname):
                 scene.tiles[self.pos[1]][self.pos[0]]+=1
             else:
                 scene.tiles[self.pos[1]][self.pos[0]] = 0
+        def loading_zone(self, segname):
+            pass
+
 
     curser = Curser((1,1), "Art/curser.png")
     scene = Map((30,12), (0, tile*2))      
@@ -156,7 +164,7 @@ def open_level_edit(filename, segname):
     while running:
         clock.tick(30)
         framecount+=1
-        if framecount % 60 == 0:
+        if framecount % 100 == 0:
             print(clock.get_fps())
         graphics()
         quit=check_key()
@@ -168,6 +176,8 @@ def open_level_edit(filename, segname):
 def parse_mode(args):
     if args[1] == "-c":
         creat_segment(args[2], args[3])
+    if args[1] == "-l":
+        place_loding_zone(args[3], args[4], args[2]) #-l (the segmentname to go to) filename segname
 
 def creat_segment(filename, segname):
     
@@ -181,6 +191,9 @@ def creat_segment(filename, segname):
 
     with open(filename, "a") as fil:
         fil.write(result)
+
+def place_loading_zone():
+    pass
 
 def merge_file():
     pass
