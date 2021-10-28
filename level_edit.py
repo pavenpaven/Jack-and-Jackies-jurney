@@ -52,7 +52,9 @@ def open_level_edit(filename, segname):
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     vec[1] += 1
                 if event.key == pygame.K_x:
-                    curser.change_tile()
+                    curser.change_tile(1)
+                if event.key == pygame.K_z:
+                    curser.change_tile(-1)
                 n=0
                 for j in tile_types.Tile_type.types:
                     if event.key == j.key:
@@ -147,9 +149,10 @@ def open_level_edit(filename, segname):
             tex = pygame.image.load(texture)
             self.texture = pygame.transform.scale(tex ,(tile, tile))
             self.pos = pos
-        def change_tile(self):
+        def change_tile(self, ammount):
+            
             if scene.tiles[self.pos[1]][self.pos[0]] != len(tile_types.Tile_type.types) - 1:
-                scene.tiles[self.pos[1]][self.pos[0]]+=1
+                scene.tiles[self.pos[1]][self.pos[0]]+=ammount
             else:
                 scene.tiles[self.pos[1]][self.pos[0]] = 0
         def loading_zone(self, segname):
