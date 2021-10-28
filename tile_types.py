@@ -11,7 +11,7 @@ def rotate_tile():
 class Tile_type:
     types_length=0
     types=[]
-    def __init__(self, texture_filename, collision, letter, key = None, rotate=0, stepfunc=no_stepfunc):
+    def __init__(self, texture_filename, collision, letter, key = None, rotate=0, flipx=False, flipy=False, stepfunc=no_stepfunc):
         self.index = __class__.types_length
         __class__.types_length += 1
         
@@ -21,11 +21,16 @@ class Tile_type:
     
         self.key = key
         self.collision = collision
-        self.letter = letter
+        self.letter = letter 
         self.stepfunc = stepfunc
         __class__.types.append(self)
+        
+        if flipx or flipy:
+            self.letter = "1" + letter
+            self.texture = pygame.transform.flip(self.texture ,flipx , flipy)
+            Tile_type(texture_filename, collision, letter)
+
         if rotate != 0:
-            print(rotate,letter, "tut")
             self.letter = str(rotate)+ letter
             Tile_type(texture_filename, collision, letter, rotate = rotate -1)
 
@@ -46,3 +51,7 @@ path = Tile_type("Art/path_1.png", False, "-", key = pygame.K_h, rotate=1)
 Tile_type("Art/path_2.png", False, "k", rotate=3)
 Tile_type("Art/path_3.png", False, "e", rotate=3)
 Tile_type("Art/path_4", False, "i")
+Tile_type("Art/fading.png", False, "f")
+Tile_type("Art/window.png", True, "w", flipx = True)
+Tile_type("Art/door.png", False, "d")
+Tile_type("Art/roof.png", True, "r")

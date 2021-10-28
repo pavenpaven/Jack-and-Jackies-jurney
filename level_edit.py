@@ -86,8 +86,11 @@ def open_level_edit(filename, segname):
             for i in row:
                 row_tiles = []
                 for f in i:
-                    if f[0] == "1" or f[0] == "2" or f[0] == "3":
-                        u = int(f[0])
+                    if f[0] == "1" or f[0] == "2" or f[0] == "3" or f[0] == "|":
+                        if f[0] == "|":
+                            u = -1
+                        else:
+                            u = int(f[0])
                     else:
                         row_tiles.append(tile_types.Tile_type.find(f).index - u)
                         u = 0
