@@ -79,6 +79,7 @@ def open_level_edit(filename, segname):
             #self.backgrund_tile = pygame.transform.scale(texture,size)
             self.surface = pygame.Surface((size[0]*tile, size[1]*tile))
             self.tiles = []
+            self.loading_zone = []
     
         def load_room(self, filename, segname):
             segments = get_segname_room(filename, segname)
@@ -123,12 +124,7 @@ def open_level_edit(filename, segname):
             seg.pop(n)
             room_info = segname + "#" + self.convert_to_letters() + "#"
             seg.insert(n, room_info)
-            result = ""
-            b=0
-            for i in seg:
-                if not b == len(seg) -1:
-                    result += i + "?"
-                b+=1
+            result = "?".join(seg)
 
             with open(filename, "w") as fil:
                 fil.write(result)
@@ -182,6 +178,8 @@ def open_level_edit(filename, segname):
 def parse_mode(args):
     if args[1] == "-c":
         creat_segment(args[2], args[3])
+    if args[1] == "-list":
+        list_segnames(args[2])
     if args[1] == "-l":
         place_loding_zone(args[3], args[4], args[2]) #-l (the segmentname to go to) filename segname
 
@@ -204,8 +202,13 @@ def place_loading_zone():
 def merge_file():
     pass
 
-def list_segnames():
-    pass
+def list_segnames(filename):
+    with open(filename, "r") as fil:
+        tex = fil.read()
+    
+    for i in tex.split("?"):
+        print(i.split("#")[0])
+
 def main():
 	parse_args(sys.argv, len(sys.argv))
 
