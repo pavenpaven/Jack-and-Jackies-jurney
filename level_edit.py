@@ -19,61 +19,61 @@ def parse_args(args, length):
             print("too few args")
         open_level_edit(args[1], args[2])
 
-class Curser:
-    def __init__(self, pos, texture):
-        tex = pygame.image.load(texture)
-        self.texture = pygame.transform.scale(tex ,(tile, tile))
-        self.tile_pos = pos
-        self.pos = (pos[0]*tile, pos[1]*tile)
-    def change_tile(self, ammount):
-        
-        if scene.tiles[self.tile_pos[1]][self.tile_pos[0]] != len(tile_types.Tile_type.types) - 1:
-            scene.tiles[self.tile_pos[1]][self.tile_pos[0]]+=ammount
-        else:
-            scene.tiles[self.tile_pos[1]][self.tile_pos[0]] = 0
-    def loading_zone(self, segname):
-        scene.tiles[self.tile_pos[1]][self.tile_pos[0]]
-
-def check_key():
-    quit = False
-    for event in  pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            vec = [0, 0]
-            if event.key == pygame.K_a or event.key == pygame.K_LEFT:
-                last_pressed=framecount
-                vec[0]+=-1
-            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                last_pressed=framecount
-                vec[0]+=1
-            if event.key == pygame.K_w or event.key == pygame.K_UP:
-                last_pressed=framecount
-                vec[1] +=-1
-            if event.key == pygame.K_s or event.key == pygame.K_DOWN:
-                vec[1] += 1
-            if event.key == pygame.K_x:
-                curser.change_tile(1)
-            if event.key == pygame.K_z:
-                curser.change_tile(-1)
-            n=0
-            for j in tile_types.Tile_type.types:
-                if event.key == j.key:
-                    scene.tiles[curser.tile_pos[1]][curser.tile_pos[0]] = n
-                n+=1
-            curser.tile_pos = (vec[0]+curser.tile_pos[0], vec[1]+curser.tile_pos[1])
-            curser.pos = (curser.tile_pos[0]*tile, curser.tile_pos[1]*tile)
-            last_pressed=framecount
-        if event.type == pygame.QUIT:
-            quit = True
-    return quit
-
-
 def open_level_edit(filename, segname):
+    def check_key():
+        quit = False
+        for event in  pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                vec = [0, 0]
+                if event.key == pygame.K_a or event.key == pygame.K_LEFT:
+                    last_pressed=framecount
+                    vec[0]+=-1
+                if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                    last_pressed=framecount
+                    vec[0]+=1
+                if event.key == pygame.K_w or event.key == pygame.K_UP:
+                    last_pressed=framecount
+                    vec[1] +=-1
+                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                    vec[1] += 1
+                if event.key == pygame.K_x:
+                    curser.change_tile(1)
+                if event.key == pygame.K_z:
+                    curser.change_tile(-1)
+                n=0
+                for j in tile_types.Tile_type.types:
+                    if event.key == j.key:
+                        scene.tiles[curser.tile_pos[1]][curser.tile_pos[0]] = n
+                    n+=1
+                curser.tile_pos = (vec[0]+curser.tile_pos[0], vec[1]+curser.tile_pos[1])
+                curser.pos = (curser.tile_pos[0]*tile, curser.tile_pos[1]*tile)
+                last_pressed=framecount
+            if event.type == pygame.QUIT:
+                quit = True
+            return quit
+
     def graphics():
         window.fill((0,0,0))
         scene.render(window, curser)
         #window.blit(font.render("tut", False, (255,255,0)), (100,100))
         pygame.display.update()
         
+
+    class Curser:
+        def __init__(self, pos, texture):
+            tex = pygame.image.load(texture)
+            self.texture = pygame.transform.scale(tex ,(tile, tile))
+            self.tile_pos = pos
+            self.pos = (pos[0]*tile, pos[1]*tile)
+        def change_tile(self, ammount):
+            
+            if scene.tiles[self.tile_pos[1]][self.tile_pos[0]] != len(tile_types.Tile_type.types) - 1:
+                scene.tiles[self.tile_pos[1]][self.tile_pos[0]]+=ammount
+            else:
+                scene.tiles[self.tile_pos[1]][self.tile_pos[0]] = 0
+        def loading_zone(self, segname):
+            scene.tiles[self.tile_pos[1]][self.tile_pos[0]]
+
 
     curser = Curser((1,1), "Art/curser.png")
     scene = world.Map((30,12), (0, tile*2))      
