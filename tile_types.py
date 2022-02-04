@@ -43,6 +43,7 @@ class Tile_type:
     def find_letter(index):
         return __class__.types[index].letter
 
+Tile_type("Art/unknown.png", True, "u", key=pygame.K_u)
 Pine_type = Tile_type("Art/pine_2.png", True, "p", key = pygame.K_p)
 jack_type = Tile_type("Art/jack.png", False, "j")
 grass_tile_type = Tile_type("Art/grass_2.png", False, "g", key = pygame.K_g)
@@ -63,3 +64,6 @@ Tile_type("Art/blue_window.png", True, "b")
 Tile_type("Art/blue_window1.png", True, "B", flipx = True)
 Tile_type("Art/blue_window2.png", True, "q")
 Tile_type("Art/blue_door.png", True, "Q")
+Tile_type("Art/floor_1.png", True, "F", key=pygame.K_f)
+Tile_type("Art/wall_side_tst.png", True, "t", rotate=3)
+Tile_type("Art/froll.png", True, "T")

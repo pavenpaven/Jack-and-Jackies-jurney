@@ -32,7 +32,6 @@ def get_segname_room(filename, segname):
         exit()
     return segments
 
-    
 
 def open_level_edit(filename, segname):
     def check_key():
@@ -69,6 +68,7 @@ def open_level_edit(filename, segname):
     def graphics():
         window.fill((0,0,0))
         scene.render()
+        window.blit(font.render("tut", False, (255,255,0)), (100,100))
         pygame.display.update()
         
     class Map:
@@ -98,7 +98,15 @@ def open_level_edit(filename, segname):
                         row_tiles.append(tile_types.Tile_type.find(f).index - u)
                         u = 0
                 self.tiles.append(row_tiles)
-    
+            
+            
+            lz_segs = segments[2].split(";") # lz_segs for loading_zone_segments
+            if lz_segs[0]:
+                func = lambda x: Loading_zone_cluster(int(x[0]), x[1], int(x[2]), int(x[3]), int(x[4]), int(x[5]), int(x[6]), int(x[7]))
+                print(list(map(lambda x: x.split("."), lz_segs)))
+                self.loading_zone = list(map(func, list(map(lambda x: x.split(".") ,lz_segs))))
+                print(self.loading_zone)
+
         def render(self):
             self.surface.fill((0,0,0))
             #self.surface.blit(self.backgrund_tile, (0,0))
@@ -109,6 +117,9 @@ def open_level_edit(filename, segname):
                     self.surface.blit(tile_types.Tile_type.types[f].texture, (x,y))
                     x += tile
                 y += tile
+            for i in self.loading_zone:
+                rect = pygame.Rect(i.rect.x * tile + tile/2 - 5, i.rect.y * tile + tile / 2 - 5, 10, 10)
+                pygame.draw.rect(self.surface, (255,0,0), rect)
             self.surface.blit(curser.texture, (curser.pos[0]*tile, curser.pos[1]*tile))
             window.blit(self.surface, self.pos)
         
@@ -122,7 +133,8 @@ def open_level_edit(filename, segname):
                     break
                 n+=1
             seg.pop(n)
-            room_info = segname + "#" + self.convert_to_letters() + "#"
+            str_loading_info = ";".join(list(map(Loading_zone_cluster.string, self.loading_zone)))
+            room_info = segname + "#" + self.convert_to_letters() + "#" + str_loading_info
             seg.insert(n, room_info)
             result = "?".join(seg)
 
@@ -140,6 +152,31 @@ def open_level_edit(filename, segname):
                 n+=1
             return out
 
+    class Loading_zone_cluster:
+        def __init__(self, point_index, segname, posx, posy, sizex, sizey, spawnx, spawny):
+            self.rect = pygame.Rect((posx, posy), (sizex, sizey))
+            self.linking_index = point_index
+            self.spawn_pos = (spawnx, spawny)
+            self.segname = segname
+
+        def get_tiles(self):
+            out = []
+            n=0
+            for i in range(self.rect.height):
+                k = []
+                for f in range(self.rect.width):
+                    k.append((f, n))
+                out.append(k)
+                n+=1
+            return out
+
+        def string(self):
+            str_rect = ".".join([str(self.rect.x), str(self.rect.y), str(self.rect.w), str(self.rect.h)])
+            str_spawn = ".".join([str(self.spawn_pos[0]), str(self.spawn_pos[1])])
+            print(self.spawn_pos)
+            return ".".join([str(self.linking_index), self.segname, str_rect, str_spawn])
+
+
     class Curser:
         def __init__(self, pos, texture):
             tex = pygame.image.load(texture)
@@ -152,13 +189,16 @@ def open_level_edit(filename, segname):
             else:
                 scene.tiles[self.pos[1]][self.pos[0]] = 0
         def loading_zone(self, segname):
-            pass
+            scene.tiles[self.pos[1]][self.pos[0]]
 
 
     curser = Curser((1,1), "Art/curser.png")
     scene = Map((30,12), (0, tile*2))      
     scene.load_room(filename, segname)
     window = pygame.display.set_mode((900,600))
+    pygame.font.init()
+    print(pygame.font.get_fonts())
+    font = pygame.font.SysFont("roboto", 100)
     running = True
     clock = pygame.time.Clock()
     framecount = 0
