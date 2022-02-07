@@ -100,7 +100,7 @@ class Map:
             n = 0
             seg = tex.split("?") 
             for i in seg:
-                if i.split("#")[0] == segname:
+                if i.split("#")[0].replace("\n", "") == segname:
                     break
                 n+=1
             seg.pop(n)

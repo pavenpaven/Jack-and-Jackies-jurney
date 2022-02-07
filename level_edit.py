@@ -77,7 +77,7 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
             else:
                 scene.tiles[self.tile_pos[1]][self.tile_pos[0]] = 0
         def place_loading_zone(self, segname):
-            pass
+            pass        
 
 
     curser = Curser((1,1), "Art/curser.png")
