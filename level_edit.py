@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import sys
 import pygame
-import tile_types
 import time
-import world
+import src.tile_types as tile_types
+import src.world as world
 
 tile=30
 map_size = (30, 12)
@@ -19,7 +19,7 @@ def parse_args(args, length):
             print("too few args")
         open_level_edit(args[1], args[2])
 
-def open_level_edit(filename, segname):
+def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname=""):
     def check_key():
         quit = False
         for event in  pygame.event.get():
@@ -36,10 +36,14 @@ def open_level_edit(filename, segname):
                     vec[1] +=-1
                 if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                     vec[1] += 1
-                if event.key == pygame.K_x:
-                    curser.change_tile(1)
-                if event.key == pygame.K_z:
-                    curser.change_tile(-1)
+                if not is_loading_zone_mode:
+                    if event.key == pygame.K_x:
+                        curser.change_tile(1)
+                    if event.key == pygame.K_z:
+                        curser.change_tile(-1)
+                else:
+                    if event.key == pygame.K_x:
+                        curser.place_loading_zone()
                 n=0
                 for j in tile_types.Tile_type.types:
                     if event.key == j.key:
@@ -65,14 +69,15 @@ def open_level_edit(filename, segname):
             self.texture = pygame.transform.scale(tex ,(tile, tile))
             self.tile_pos = pos
             self.pos = (pos[0]*tile, pos[1]*tile)
+            self.loading_zone_state = 0
         def change_tile(self, ammount):
             
             if scene.tiles[self.tile_pos[1]][self.tile_pos[0]] != len(tile_types.Tile_type.types) - 1:
                 scene.tiles[self.tile_pos[1]][self.tile_pos[0]]+=ammount
             else:
                 scene.tiles[self.tile_pos[1]][self.tile_pos[0]] = 0
-        def loading_zone(self, segname):
-            scene.tiles[self.tile_pos[1]][self.tile_pos[0]]
+        def place_loading_zone(self, segname):
+            pass
 
 
     curser = Curser((1,1), "Art/curser.png")
@@ -80,7 +85,7 @@ def open_level_edit(filename, segname):
     scene.load_room(filename, segname)
     window = pygame.display.set_mode((900,600))
     pygame.font.init()
-    print(pygame.font.get_fonts())
+    #print(pygame.font.get_fonts())
     font = pygame.font.SysFont("roboto", 100)
     running = True
     clock = pygame.time.Clock()
@@ -114,7 +119,7 @@ def creat_segment(filename, segname):
             tiles += "g"
         tiles += "\n"
 
-    result = segname + "#" + tiles + "#" + "0.t.100.100.0.0.0.0#" + "?"
+    result = segname + "#" + tiles + "#" + "?"
 
     with open(filename, "a") as fil:
         fil.write(result)

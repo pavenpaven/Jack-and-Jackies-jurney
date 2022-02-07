@@ -1,8 +1,9 @@
 import pygame
-import tile_types
 import math
 import sys
-import world
+import src.tile_types as tile_types
+import src.world as world
+import src.conf as conf
 
 window = pygame.display.set_mode((900,600))
 
@@ -42,7 +43,7 @@ def check_key(framecount,last_pressed):
   return last_pressed
       
 scene = world.Map((30,12), (0, tile*2))
-scene.load_room("Level/test1", "test") #revert to ma
+scene.load_room(conf.conf_search("starting_filename"), conf.conf_search("starting_segname")) #revert to ma
 print(scene.tiles)
 
 class Player:

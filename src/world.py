@@ -1,6 +1,6 @@
 import math
 import pygame
-import tile_types
+import src.tile_types as tile_types
 
 tile = 30
 
@@ -52,7 +52,6 @@ class Map:
             self.tiles = []
             self.loading_zone = []
 
-    
         def load_room(self, filename, segname):
             segments = get_segname_room(filename, segname)
             segments = segments.split("#")
@@ -62,19 +61,25 @@ class Map:
             for i in row:
                 row_tiles = []
                 for f in i:
-                    if f[0] == "1" or f[0] == "2" or f[0] == "3":
-                        u = int(f[0])
+                    if f[0] == "1" or f[0] == "2" or f[0] == "3" or f[0] == "|":
+                        if f[0] == "|":
+                            u = -1
+                        else:
+                            u = int(f[0])
                     else:
                         row_tiles.append(tile_types.Tile_type.find(f).index - u)
                         u = 0
                 self.tiles.append(row_tiles)
-            
+
+
             lz_segs = segments[2].split(";") # lz_segs for loading_zone_segments
-            if lz_segs[0]: # only in case of loading zones being present
+            if lz_segs[0]:
                 func = lambda x: Loading_zone_cluster(int(x[0]), x[1], int(x[2]), int(x[3]), int(x[4]), int(x[5]), int(x[6]), int(x[7]))
                 print(list(map(lambda x: x.split("."), lz_segs)))
                 self.loading_zone = list(map(func, list(map(lambda x: x.split(".") ,lz_segs))))
-                print(self.loading_zone[0].rect, "loading")
+                print(self.loading_zone)
+            else:
+                self.loading_zone = []
 
         def render(self, window, player):
             self.surface.fill((0,0,0))
@@ -95,22 +100,18 @@ class Map:
             n = 0
             seg = tex.split("?") 
             for i in seg:
-                if i.split("#")[0].replace("\n", "") == segname:
+                if i.split("#")[0] == segname:
                     break
                 n+=1
             seg.pop(n)
-            room_info = segname + "#" + self.convert_to_letters() + "#"
+            str_loading_info = ";".join(list(map(Loading_zone_cluster.string, self.loading_zone)))
+            room_info = segname + "#" + self.convert_to_letters() + "#" + str_loading_info
             seg.insert(n, room_info)
-            result = ""
-            b=0
-            for i in seg:
-                if not b == len(seg) -1:
-                    result += i + "?"
-                b+=1
+            result = "?".join(seg)
 
             with open(filename, "w") as fil:
                 fil.write(result)
-        
+                
         def convert_to_letters(self):
             out = ""
             n=0
