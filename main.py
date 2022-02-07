@@ -70,7 +70,7 @@ class Player:
         vector[0] *= math.sqrt(2)/2
         vector[1] *= math.sqrt(2)/2 # just dont ansk
     travel_pos = (self.pos[0] + vector[0]*self.speed , self.pos[1]+vector[1]*self.speed)
-    player_hitbox = (travel_pos, (travel_pos[0] + self.size[0], travel_pos[1] + self.size[1]))
+    player_hitbox = ((travel_pos[0], travel_pos[1]+20), (travel_pos[0] + self.size[0], travel_pos[1] + (self.size[1]/3)))
     tiles = get_touching_tiles(player_hitbox, scene)
     can_go = True
     for i in tiles:
@@ -80,7 +80,7 @@ class Player:
         self.pos = travel_pos
     self.check_loading_zone(pygame.Rect(player_hitbox[0], (self.size))) 
 
-jack = Player((100,100), "Art/jack.png", (20,28), 3)
+jack = Player((100,100), "Art/jack.png", (20,28), 5)
 
 def get_touching_tiles(rect, sce): #sce for scene idk why
     out = []
