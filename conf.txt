@@ -1,2 +1,2 @@
-starting_filename = Level/test1
-starting_segname = test
+starting_filename = Level/natan
+starting_segname = Spawn

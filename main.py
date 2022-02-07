@@ -62,7 +62,7 @@ class Player:
       if x:
         x=x[0] #yes
         lz = scene.loading_zone[x]
-        scene.load_room("Level/test1", lz.segname)
+        scene.load_room("Level/natan", lz.segname)
         self.pos = lz.spawn_pos
         
   def walk(self, vector):
@@ -80,7 +80,7 @@ class Player:
         self.pos = travel_pos
     self.check_loading_zone(pygame.Rect(player_hitbox[0], (self.size))) 
 
-jack = Player((30,30), "Art/jack.png", (20,28), 3)
+jack = Player((100,100), "Art/jack.png", (20,28), 3)
 
 def get_touching_tiles(rect, sce): #sce for scene idk why
     out = []
