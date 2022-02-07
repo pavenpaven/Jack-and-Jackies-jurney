@@ -23,8 +23,9 @@ class Loading_zone_cluster:
         return out
 
     def string(self):
-        str_rect = ".".join([str(self.rect.x), str(self.rect.y), str(self.rect.w), str(self.rect.h)])
-        str_spawn = ".".join([str(self.spawn_pos[0]), str(self.spawn_pos[1])])
+        # Converts object into storable string needs to round because 9 / 3 = 3.0 and that will become "3.0"
+        str_rect = ".".join([str(round(self.rect.x / tile)), str(round(self.rect.y / tile)), str(round(self.rect.w / tile)), str(round(self.rect.h / tile))])
+        str_spawn = ".".join([str(round(self.spawn_pos[0] / tile)), str(round(self.spawn_pos[1] / tile))])
         print(self.spawn_pos)
         return ".".join([str(self.linking_index), self.segname, str_rect, str_spawn]) 
 
@@ -77,7 +78,6 @@ class Map:
                 func = lambda x: Loading_zone_cluster(int(x[0]), x[1], int(x[2]), int(x[3]), int(x[4]), int(x[5]), int(x[6]), int(x[7]))
                 print(list(map(lambda x: x.split("."), lz_segs)))
                 self.loading_zone = list(map(func, list(map(lambda x: x.split(".") ,lz_segs))))
-                print(self.loading_zone)
             else:
                 self.loading_zone = []
 

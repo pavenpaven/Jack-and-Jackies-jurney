@@ -78,9 +78,9 @@ class Player:
             can_go = False
     if can_go:
         self.pos = travel_pos
-    self.check_loading_zone(pygame.Rect(player_hitbox[0], (self.size))) 
+    self.check_loading_zone(pygame.Rect(player_hitbox[0], (self.size[0], self.size[1]/3))) 
 
-jack = Player((100,100), "Art/jack.png", (20,28), 5)
+jack = Player((100,100), "Art/jack.png", (20,28), 4.5)
 
 def get_touching_tiles(rect, sce): #sce for scene idk why
     out = []
