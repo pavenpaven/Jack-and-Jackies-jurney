@@ -58,7 +58,7 @@ pgppgppgppgpgggpgpggggpgpppgpg
 pgggggpggpgggpgpppgppppgggpgpp
 ppppppppgggpgpggggggpgggpggggp
 pppppppppppppppppppppppppppppp
-#0.Three_way.15.0.3.1.15.10;1.Cabin.29.6.1.3.1.6?Cabin#pppppppppppppppppppppppppppppp
+#0.Three_way.15.0.3.1.15.10;1.Cabin.29.6.1.3.1.6;2.Ester_egg_1.28.0.1.1.28.10?Cabin#pppppppppppppppppppppppppppppp
 pppgggggggggggppgggggppppppppp
 pppggppppgggggggggpgggpprrrppp
 ppppgggpppppppgggpppggpgwd1wppp
@@ -100,7 +100,7 @@ pppp#?Cave_entry#ÅÅÅååååååÅÅÅåååååååååÅÅÅåååååå
 ÅÅÅÅÅÅÄñÄ1öppggggggggpppöÄñÅÅÅÅ
 ñsñÄÄ1öppppppppppgggggpppppöÄñÄ
 ñÄ1öpppppppppppppppg3fgppppppppp
-#1.Stad.18.11.3.1.19.1?TEST#S1--3k2k1kk3e2e1eei3f2f1ff1wwdrD1WWy1YYb1BBq
+#1.Stad.18.11.3.1.19.1;1.Cave.15.5.3.1.20.10?TEST#S1--3k2k1kk3e2e1eei3f2f1ff1wwdrD1WWy1YYb1BBq
 QF3t2t1ttTsåÅ3ä2ä1ää3Ä2Ä1ÄÄ3ö2ö1öö3Ö2Ö1ÖÖ3^2^1^^
 up3j2j1jjgggggggggggggggggggggggg
 gggggggggggggggggggggggggggggg
@@ -124,7 +124,7 @@ sssñssssñÅÅÅsssssssÅÅÅååÅÅÅååå
 åÅÅÅåsssssssssñÅssñssssåååÅÅåå
 åÅåååååñsssssñååååsssssÅåååååå
 åååÅÅÅåÅååÅååååÅÅååssssñååååÅå
-#?Pussel_cave#åååååååååååååååååååååååååååååå
+#0.Cave_entry.19.11.4.1.16.7;1.Ester_egg_2.0.7.1.1.28.7;0.Pussel_cave.3.0.4.1.4.10;0.Cave_väg.29.1.1.3.1.3?Pussel_cave#åååååååååååååååååååååååååååååå
 åååååååååååååååååååsssñsåååååå
 ååååååååsñsssñååssssssssssåååå
 ååååååsssssñsssñsssñsssssñsååå
@@ -136,7 +136,7 @@ sssñssssñÅÅÅsssssssÅÅÅååÅÅÅååå
 ååsssñsssssssñsssñsåååssssåååå
 ååsñsssññssååååååååååååååååååå
 ååñssñåååååååååååååååååååååååå
-#?Cave_väg#ÅÅÅÅååÅÅÅÅååååÅååååååÅÅÅÅåÅÅåå
+#0.Cave.3.11.4.1.4.1?Cave_väg#ÅÅÅÅååÅÅÅÅååååÅååååååÅÅÅÅåÅÅåå
 sssñÅååååååÅÅÅåÅÅååÅÅñssñÅåÅÅÅ
 sssssÅÅÅåÅååååååååÅsssssssÅååå
 ssssñssñÅÅÅååÅÅåÅåñssssssssÅåÅ
@@ -148,7 +148,7 @@ ssssñssñÅÅÅååÅÅåÅåñssssssssÅåÅ
 ååÅåÅÅååÅÅååñssñÅÅåååÅÅÅååååÅå
 åÅÅååååÅåååÅåååÅÅÅååÅååååÅÅÅÅå
 ÅååÅÅåååÅÅÅååååÅÅÅåååÅÅååååååå
-#?Cave_boss#åååååååååååååååååååååååååååååå
+#0.Cave.0.1.1.3.28.1;1.Cave_boss.29.6.1.3.1.7?Cave_boss#åååååååååååååååååååååååååååååå
 åååååñssssssssñññññsssåååååååå
 åååññssssssssssñññsssssññååååå
 ååñssssssssssssññsssssssññåååå
@@ -160,7 +160,7 @@ ssssssssssssssssssssssssssssså
 ååååññsssssssssssssssssssññååå
 ååååååååññssssñññsssssñååååååå
 åååååååååååååååååååååååååååååå
-#?Ester_egg_2#åååååååååååååååååååååååååååååå
+#0.Cave_väg.0.6.1.3.28.7?Ester_egg_2#åååååååååååååååååååååååååååååå
 åååååååååååååååååååååååååååååå
 ååååååååååååååååååååååssssåååå
 ååååååååååååååååååssssssssssåå
@@ -172,7 +172,7 @@ ssssssssssssssssssssssssssssså
 ååååååååååååååååååååååssssåååå
 åååååååååååååååååååååååååååååå
 åååååååååååååååååååååååååååååå
-#?Ester_egg_1#pppppppppppppppppppppppppppppp
+#0.Cave.29.7.1.1.1.7?Ester_egg_1#pppppppppppppppppppppppppppppp
 pppppppppppppppppppppppppppppp
 pppppppppppppppppppppppppppppp
 pppppppppppppppppppppppppppppp
@@ -184,4 +184,4 @@ ppppppppppppppgggggggggggggggp
 ppppppppppppppgggggggggggggggp
 pppppppppppppppppgggppppgggggp
 ppppppppppppppppppppppppppppgp
-#?
+#0.Labyrith.28.11.1.1.28.1?
