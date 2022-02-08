@@ -61,8 +61,7 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
         scene.render(window, curser)
         #window.blit(font.render("tut", False, (255,255,0)), (100,100))
         pygame.display.update()
-        
-
+            
     class Curser:
         def __init__(self, pos, texture):
             tex = pygame.image.load(texture)
@@ -77,7 +76,7 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
             else:
                 scene.tiles[self.tile_pos[1]][self.tile_pos[0]] = 0
         def place_loading_zone(self, segname):
-            pass        
+            pass
 
 
     curser = Curser((1,1), "Art/curser.png")
@@ -105,28 +104,24 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
 
 def parse_mode(args):
     if args[1] == "-c":
-        creat_segment(args[2], args[3])
+        creat_segment(args[2], args[3], args[4])
     if args[1] == "-list":
         list_segnames(args[2])
     if args[1] == "-l":
-        place_loding_zone(args[3], args[4], args[2]) #-l (the segmentname to go to) filename segname
+        open_level_edit(args[3], args[4], is_loading_zone_mode = True, lz_segname=args[2])
 
-def creat_segment(filename, segname):
+def creat_segment(character, filename, segname):
     
     tiles = ""
     for i in range(map_size[1]):
         for f in range(map_size[0]):
-            tiles += "g"
+            tiles += character
         tiles += "\n"
 
     result = segname + "#" + tiles + "#" + "?"
 
     with open(filename, "a") as fil:
         fil.write(result)
-
-
-def place_loading_zone():
-    pass
 
 def merge_file():
     pass
