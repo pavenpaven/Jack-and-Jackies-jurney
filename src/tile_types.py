@@ -43,7 +43,7 @@ class Tile_type:
     def find_letter(index):
         return __class__.types[index].letter
 
-Tile_type("Art/unknown.png", True, "u", key=pygame.K_u)
+Tile_type("Art/unknown.png", False, "u", key=pygame.K_u)
 Pine_type = Tile_type("Art/pine_2.png", True, "p", key = pygame.K_p)
 jack_type = Tile_type("Art/jack.png", True, "j", rotate=3)
 grass_tile_type = Tile_type("Art/grass_2.png", False, "g", key = pygame.K_g)
@@ -73,9 +73,10 @@ Tile_type("Art/stone_wall.png", True, "Å")
 Tile_type("Art/stone_mark_grass_corner.png", False, "ä", rotate=3)
 Tile_type("Art/stone_mark_grass_edge.png", False, "Ä", rotate=3)
 Tile_type("Art/stone_mark_grass_long_edge.png", False, "ö", rotate=3)
+Tile_type("Art/stone.png", True, "ñ", key=pygame.K_v)
 Tile_type("Art/cave_entraince.png", False, "Ö", rotate=3)
 Tile_type("Art/kant_cave_entrance.png", False, "^", rotate=3)
-Tile_type("Art/upper_middle_shop.png", True, "*", key=pygame.K_v)
+Tile_type("Art/upper_middle_shop.png", True, "*", key=pygame.K_b)
 Tile_type("Art/down_middel_shop.png", True, "~")
 Tile_type("Art/upper_corner_shop.png", True, "!", flipx = True)
 Tile_type("Art/down_corner_shop.png", True, "@", flipx = True)
