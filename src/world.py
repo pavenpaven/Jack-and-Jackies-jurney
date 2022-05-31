@@ -1,6 +1,7 @@
 import math
 import pygame
 import src.tile_types as tile_types
+import src.actor as actor
 
 tile = 30
 
@@ -38,7 +39,7 @@ def get_segname_room(filename, segname):
         if segments[0].replace("\n", "") == segname:
             break
     else:
-        print("no segment name named: ", segname)
+        print(f"no segment name named: { segname}")
         pygame.quit()
         exit()
     return "#".join(segments)    
@@ -52,6 +53,7 @@ class Map:
             self.surface = pygame.Surface((size[0]*tile, size[1]*tile))
             self.tiles = []
             self.loading_zone = []
+            self.actors = []
 
         def load_room(self, filename, segname):
             segments = get_segname_room(filename, segname)
@@ -81,6 +83,8 @@ class Map:
             else:
                 self.loading_zone = []
 
+            self.actors = actor.load_sprites(segname, "Level/natan_actors")
+
         def render(self, window, player):
             self.surface.fill((0,0,0))
             #self.surface.blit(self.backgrund_tile, (0,0))
@@ -91,7 +95,12 @@ class Map:
                     self.surface.blit(tile_types.Tile_type.types[f].texture, (x,y))
                     x += tile
                 y += tile
+
+            for i in self.actors:
+              i.render(self.surface)
+
             self.surface.blit(player.texture, player.pos)
+          
             window.blit(self.surface, self.pos)
         
         def save(self, filename, segname):

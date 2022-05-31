@@ -1,0 +1,25 @@
+Paven:
+player collision with actors
+step funktion for actors
+step on funktion for actors
+interaction key (like "x" to talk)
+somewhere just fix so that background is renderd ones and then blitet on to the screen
+button interatktion for actors
+    Npc dialog btw you guys kan skriva dialog
+combat and enemy
+inventory
+someday item button use effekt on actors (use axe on trees and stone shit, keys on doors)
+sound
+controler
+
+Chim:
+    Make Paven do co-op. (force them)
+      animations oh wait dats paven job
+    Make music?!
+      Make SFX
+
+Nana:
+make levels/house inside ... maybe
+
+Eliah:
+make ze all the textures

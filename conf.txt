@@ -1,2 +1,4 @@
 starting_filename = Level/natan
+starting_actor_filename = Level/natan_actor
 starting_segname = Spawn
+speed = 4.5
