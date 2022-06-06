@@ -72,7 +72,7 @@ class Player:
     travel_pos = (self.pos[0] + vector[0]*self.speed , self.pos[1]+vector[1]*self.speed)
     player_hitbox = ((travel_pos[0], travel_pos[1]+20), (travel_pos[0] + self.size[0], travel_pos[1] + (self.size[1]/3)))
     
-    can_go=check_collision(player_hitbox,scene)
+    can_go=check_collision(player_hitbox,scene, (pygame.Rect(player_hitbox[0], (self.size[0], self.size[1]/3))))
     
     if can_go:
         self.pos = travel_pos
@@ -80,15 +80,15 @@ class Player:
 
 jack = Player((100,100), "Art/jack.png", (20,28), float(conf.conf_search("speed")))
 
-def check_collision(player_hitbox,scene):
+def check_collision(player_hitbox,scene, player_rect):
     tiles = get_touching_tiles(player_hitbox, scene)
     can_go = True
     for i in tiles:
         if tile_types.Tile_type.types[scene.tiles[i[1]][i[0]]].collision:
             can_go = False
-    player_rect = pygame.Rect(player_hitbox[0], player_hitbox[1])
+
     for i in scene.actors:
-      if i.collision:
+      if i.collision:  
         if player_rect.colliderect(pygame.Rect(i.pos,i.size)):
           can_go = False
         

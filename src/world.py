@@ -98,7 +98,7 @@ class Map:
 
             for i in self.actors:
               i.render(self.surface)
-
+            
             self.surface.blit(player.texture, player.pos)
           
             window.blit(self.surface, self.pos)

@@ -17,7 +17,7 @@ def load_sprites(segname, filename):
     seg = seg[0][1].split("\n")
     seg = list(map(lambda x:x.split("-"), seg))
     seg.pop(0)
-    for n,i in enumerate(seg):
+    for n,i in enumerate(seg[0:len(seg)-1]):
       x = i[1].split(",")
       seg[n][1] =  (float(x[0])*tile, float(x[1])*tile)
 
@@ -54,7 +54,7 @@ class Sprite:
 class Test(Sprite):
   texture=re("Art/Flower_1.png", (20,28))
   name="test"
-  size=(1,1)
+  size=(tile,tile)
   collision = True
 
 SPRITE_CLASSES=[Test]
