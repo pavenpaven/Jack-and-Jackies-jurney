@@ -2,7 +2,7 @@ import pygame
 
 tile=30
 
-def load_sprites(segname, filename):
+def load_sprites(segname, filename, change_state):
   with open(filename, "r") as fil:
     txt=fil.read()
   
@@ -28,10 +28,10 @@ def load_sprites(segname, filename):
         print(i, f.name)
         if i[0]==f.name:
           if len(i)>2:
-            out.append(f(i[1],extra=i[2]))
+            out.append(f(i[1],change_state,extra=i[2]))
           else:
             print(f,i[1])
-            out.append(f(i[1]))
+            out.append(f(i[1], change_state))
   else:
     out = []
 
@@ -46,8 +46,27 @@ class Sprite:
   texture=re("Art/unknown.png", (1,1))
   size=(1,1)
   collision=False
-  def __init__(self, pos,extra=""):
-    self.pos = pos
+  interactable = False
+  def __init__(self, pos, change_state, extra=""):
+    print(pos)
+    #pos = pos.split(",") #stupid string
+    #self.pos = (tile*int(pos[0]), tile*int(pos[1]))
+    self.pos =pos
+    self.change_state = change_state
+    self.startup_process(extra)
+
+  def startup_process(self, extra):
+    pass
+
+  def step_on(self):
+    pass
+
+  def step(self):
+    pass
+
+  def player_action(self):
+    pass
+    
   def render(self, scene):
     scene.blit(self.texture, self.pos)
 

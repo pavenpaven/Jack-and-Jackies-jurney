@@ -2,6 +2,8 @@ import math
 import pygame
 import src.tile_types as tile_types
 import src.actor as actor
+import src.npc #order matters
+import src.state as state
 
 tile = 30
 
@@ -45,7 +47,7 @@ def get_segname_room(filename, segname):
     return "#".join(segments)    
 
 class Map:
-        def __init__(self, size, pos): #size is a tuple
+        def __init__(self, size, pos, current_state: state.State): #size is a tuple
             self.size = size
             self.pos = pos
             #texture= pygame.image.load(backgrund_filename)
@@ -54,7 +56,11 @@ class Map:
             self.tiles = []
             self.loading_zone = []
             self.actors = []
+            self.state = current_state
 
+        def change_state(self, changed_state: state.State) -> None:
+          self.state = changed_state
+      
         def load_room(self, filename, segname):
             segments = get_segname_room(filename, segname)
             segments = segments.split("#")
@@ -83,7 +89,7 @@ class Map:
             else:
                 self.loading_zone = []
 
-            self.actors = actor.load_sprites(segname, "Level/natan_actors")
+            self.actors = actor.load_sprites(segname, "Level/natan_actors", self.change_state)
 
         def render(self, window, player):
             self.surface.fill((0,0,0))
