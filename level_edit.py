@@ -5,6 +5,8 @@ import time
 import src.tile_types as tile_types
 import src.world as world
 
+pygame.font.init()
+
 tile=30
 map_size = (30, 12)
 
@@ -59,7 +61,7 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
     def graphics():
         window.fill((0,0,0))
         scene.render(window, curser)
-        #window.blit(font.render("tut", False, (255,255,0)), (100,100))
+        window.blit(font.render(str(tuple(i/tile for i in curser.pos)), True, (255,255,0)), (10,10))
         pygame.display.update()
             
     class Curser:
@@ -80,12 +82,12 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
 
 
     curser = Curser((1,1), "Art/curser.png")
-    scene = world.Map((30,12), (0, tile*2))      
+    scene = world.Map((30,12), (0, tile*2), 1) #wtf state 1 lol      
     scene.load_room(filename, segname)
     window = pygame.display.set_mode((900,600))
     pygame.font.init()
     #print(pygame.font.get_fonts())
-    font = pygame.font.SysFont("roboto", 100)
+    font = pygame.font.SysFont("roboto", 30)
     running = True
     clock = pygame.time.Clock()
     framecount = 0
