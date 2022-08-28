@@ -76,4 +76,10 @@ class Test(Sprite):
   size=(tile,tile)
   collision = True
 
-SPRITE_CLASSES=[Test]
+class Cactus(Sprite):
+    texture=re("Art/cactus.png", (22, 32))
+    name="cactus"
+    size = (20, 28)
+    collision = True
+
+SPRITE_CLASSES=[Test, Cactus]

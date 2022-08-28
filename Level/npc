@@ -1,9 +1,22 @@
-lumber man:
-Art/jack.png#
-Hello who are you#
-yes yes i can understand what yu sei#
-lol tis so stupid#
+Esther:
+Art/jane.png#
+Hej jag heter Esther och det här är mitt ägg#
+Ta hand om ägget tills det blir till en tupp för you know jag kan veta sånt.#
 ;
-shopkeeper:
-i can speak wow#
-dis is very boring#
+Village_person:
+Art/jack.png#
+<Village Person>I heard a terrible sound from the cave I wonder what it is#
+;
+Jackie:
+Art/jackie.png#
+I'm Jackie, a lumberjack. What's your name?#
+Oh that sounds very similar to mine.#
+Yeah I saw a weird [arrow-like] object falling from the sky. #
+What do you want to follow? You know it's very dangerous.#
+Ok maybe I need a partner I guess#
+;
+Jane:
+Art/jane.png#
+<jane>What are you doing in the coal mine?... I can’t let you enter without a fight… or some.. [money]. I'm not a mine safety inspector for free.#
+<player>Do you want to fight Jane Y/N.#
+Jane_combat_scene%

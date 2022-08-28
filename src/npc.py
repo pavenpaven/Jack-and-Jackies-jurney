@@ -20,8 +20,8 @@ def load_npc_dialog(segname, filename):
 
 class Npc(actor.Sprite):
   name = "npc"
-  texture = actor.re("Art/jane.png", (30,30))
-  size = (30,30)
+  texture = actor.re("Art/jane.png", (20,28))
+  size = (20,28)
   collision = True
   interactable = True
   
@@ -36,7 +36,7 @@ class Npc(actor.Sprite):
     x = x.split("#")
     x = list(map(lambda x:x.replace("\n",""),x))
     try:
-      self.texture = actor.re(x[0].replace("\n", ""), (18,20))
+      self.texture = actor.re(x[0].replace("\n", ""), (20,28))
     except:
       print(f"npc {self.npc_name} texture bad {x[0]}")
     self.dialog = x[1:len(x)-1]

@@ -4,3 +4,19 @@ test-3,4
 Spawn:
 npc-7,7-lumber man
 test-6,6
+;
+Ester_egg_1:
+npc-18,7-Esther
+test-19,8
+;
+Cave_väg:
+npc-9,5-Jane
+;
+Cabin:
+npc-25,4-Jackie
+;
+desert_test:
+cactus-10,5
+cactus-14,7
+cactus-5,8
+cactus-11,2
