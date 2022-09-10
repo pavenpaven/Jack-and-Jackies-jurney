@@ -4,6 +4,8 @@ import src.tile_types as tile_types
 import src.actor as actor
 import src.npc #order matters
 import src.state as state
+import src.music as music
+
 
 tile = 30
 
@@ -29,10 +31,10 @@ class Loading_zone_cluster:
         # Converts object into storable string needs to round because 9 / 3 = 3.0 and that will become "3.0"
         str_rect = ".".join([str(round(self.rect.x / tile)), str(round(self.rect.y / tile)), str(round(self.rect.w / tile)), str(round(self.rect.h / tile))])
         str_spawn = ".".join([str(round(self.spawn_pos[0] / tile)), str(round(self.spawn_pos[1] / tile))])
-        print(self.spawn_pos)
+        #print(self.spawn_pos)
         return ".".join([str(self.linking_index), self.segname, str_rect, str_spawn]) 
 
-def get_segname_room(filename, segname):
+def get_segname_room(filename, segname): #returns segment if not found returns -1
     with open(filename, "r") as fil:
         text = fil.read()
         
@@ -42,8 +44,7 @@ def get_segname_room(filename, segname):
             break
     else:
         print(f"no segment name named: { segname}")
-        pygame.quit()
-        exit()
+        return -1
     return "#".join(segments)    
 
 class Map:
@@ -57,12 +58,15 @@ class Map:
             self.loading_zone = []
             self.actors = []
             self.state = current_state
+            self.music = music.Music("Level/theme_info")
 
         def change_state(self, changed_state: state.State) -> None:
           self.state = changed_state
       
         def load_room(self, filename, segname):
             segments = get_segname_room(filename, segname)
+            if segments == -1:
+                return -1
             segments = segments.split("#")
             row = segments[1].split("\n")
             self.tiles=[]
@@ -84,12 +88,14 @@ class Map:
             lz_segs = segments[2].split(";") # lz_segs for loading_zone_segments
             if lz_segs[0]:
                 func = lambda x: Loading_zone_cluster(int(x[0]), x[1], int(x[2]), int(x[3]), int(x[4]), int(x[5]), int(x[6]), int(x[7]))
-                print(list(map(lambda x: x.split("."), lz_segs)))
+                #print(list(map(lambda x: x.split("."), lz_segs)))
                 self.loading_zone = list(map(func, list(map(lambda x: x.split(".") ,lz_segs))))
             else:
                 self.loading_zone = []
 
             self.actors = actor.load_sprites(segname, "Level/natan_actors", self.change_state)
+            self.music.change_segname(segname) # idk self.music should alsow be in combat
+
 
         def render(self, window, player):
             self.surface.fill((0,0,0))

@@ -11,8 +11,8 @@ def load_npc_dialog(segname, filename):
   txt = txt.split(";\n")
   txt = list(map(lambda x:x.split(":"), txt))
 
-  for i in txt:
-    print(segname, i[0])
+  #for i in txt:
+  #   print(segname, i[0])
     
   seg = list(filter(lambda x:segname==x[0], txt))
   if not seg==[]:

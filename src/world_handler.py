@@ -36,10 +36,19 @@ def check_key(event_list, framecount):
   if key.is_keydown(event_list, "x", framecount):
     jack.use_button(scene.actors)
 
+  if key.is_keydown(event_list, "o", framecount) and is_cheats_on:
+      world_commands()
+
+is_cheats_on = conf.conf_search("cheats")=="True"
+
+def world_commands():
+    command = input("Enter a command: ")
+    if command.startswith("load "):
+        scene.load_room(conf.conf_search("starting_filename"), command.split(" ")[1])
 
 scene = world.Map((30,12), (0, tile*2), state.State.OVERWORLD)
 scene.load_room(conf.conf_search("starting_filename"), conf.conf_search("starting_segname")) #revert to ma
-print(scene.tiles)
+#print(scene.tiles)
 
 imag = pygame.image.load("Art/Flower_1.png")
 imag = pygame.transform.scale(imag, (tile, tile))

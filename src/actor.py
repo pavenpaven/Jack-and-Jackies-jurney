@@ -9,8 +9,8 @@ def load_sprites(segname, filename, change_state):
   txt = txt.split(";\n")
   txt = list(map(lambda x:x.split(":"), txt))
 
-  for i in txt:
-    print(segname, i[0])
+  #for i in txt:
+    #print(segname, i[0])
     
   seg = list(filter(lambda x:segname==x[0], txt))
   if not seg==[]:
@@ -25,12 +25,12 @@ def load_sprites(segname, filename, change_state):
     out=[]
     for i in seg:
       for f in SPRITE_CLASSES:
-        print(i, f.name)
+        #print(i, f.name)
         if i[0]==f.name:
           if len(i)>2:
             out.append(f(i[1],change_state,extra=i[2]))
           else:
-            print(f,i[1])
+            #print(f,i[1])
             out.append(f(i[1], change_state))
   else:
     out = []
@@ -48,7 +48,7 @@ class Sprite:
   collision=False
   interactable = False
   def __init__(self, pos, change_state, extra=""):
-    print(pos)
+    #print(pos)
     #pos = pos.split(",") #stupid string
     #self.pos = (tile*int(pos[0]), tile*int(pos[1]))
     self.pos =pos
@@ -80,6 +80,6 @@ class Cactus(Sprite):
     texture=re("Art/cactus.png", (22, 32))
     name="cactus"
     size = (20, 28)
-    collision = True
+    collision = False
 
 SPRITE_CLASSES=[Test, Cactus]

@@ -7,6 +7,7 @@ import src.world as world
 import src.state as state
 import state_handler
 
+
 window = pygame.display.set_mode((900,600))
 
 tile = world.tile
@@ -33,7 +34,7 @@ def main():
 
     x = state_handler.state_handling(current_state, window, framecount, event_list)
     state_handler.previous.state = current_state
-    current_state = x # i was trying to clean up code lol
+    current_state = x
     
     post_graphics(fps_surface)
 
@@ -45,6 +46,6 @@ def main():
     for event in event_list:
       if event.type == pygame.QUIT:
         pygame.quit()
-        running=False
+        running = False
 
 main()
