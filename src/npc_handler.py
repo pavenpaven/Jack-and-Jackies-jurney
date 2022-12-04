@@ -26,7 +26,7 @@ def check_keys(framecount, eventlist):
   return False
 
 pygame.font.init()
-NPC_FONT = pygame.font.SysFont("roboto", 25)
+NPC_FONT = pygame.font.SysFont("joystix monospace.ttf", 25)
    
 
 text_box = text_box.Text_box(pygame.Rect((90,280), (720, 125)), NPC_FONT)

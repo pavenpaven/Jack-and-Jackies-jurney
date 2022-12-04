@@ -1,6 +1,9 @@
 import pygame
 
 pygame.font.init()
+pygame.display.init()
+
+TEXT_BOX_TEXTURE = pygame.transform.scale(pygame.image.load("Art/new_new_new_new_new_new_text_box.png"), (720, 125))
 
 
 def display_text(font, size, text) -> pygame.Surface: #size is size requierment for text 
@@ -22,11 +25,12 @@ def display_text(font, size, text) -> pygame.Surface: #size is size requierment 
     if height > size[1]:
         print("Warning text height exeeding bounds")
 
-    surface = pygame.Surface((width, height))
+    surface = pygame.Surface((width, height), pygame.SRCALPHA, 32)
+    #surface = surface.convert_alpha()
     
     y_offset = 0
     for i in lines:
-        surface.blit(font.render(i, True, (255, 255, 255)), (0, y_offset))
+        surface.blit(font.render(i, True, (200, 0, 200)), (0, y_offset))
 
         y_offset += font.size(i)[1]
 
@@ -45,8 +49,9 @@ class Text_box:
   def advance(self) -> bool: #returns True if end of Text_box
     if not len(self.dialog):
       return True
-    self.surface.fill((0,0,0))
-    pygame.draw.rect(self.surface, (255,255,255), self.rect, self.outline)
+    #self.surface.fill((0,0,0))
+    #pygame.draw.rect(self.surface, (255,255,255), self.rect, self.outline)
+    self.surface.blit(TEXT_BOX_TEXTURE, (0,0))
     text_surface=display_text(self.font, self.rect.size, self.dialog.pop(0))
     text_rect = text_surface.get_rect()
     cpy_rect = self.rect.copy()
