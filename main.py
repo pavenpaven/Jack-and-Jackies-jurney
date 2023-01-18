@@ -8,6 +8,7 @@ import src.state as state
 import state_handler
 
 
+pygame.display.init()
 window = pygame.display.set_mode((900,600))
 
 tile = world.tile

@@ -1,7 +1,11 @@
 Esther:
 Art/jane.png#
-Hej jag heter Esther och det här är mitt ägg#
+Hej jag heter Jesther och det här är mitt ägg#
 Ta hand om ägget tills det blir till en tupp för you know jag kan veta sånt.#
+Men först en duell#
+Btw jag fick ägget genom att en höna sa att jag skulle 
+ta hand om det presis innan hon dog#
+annars hade det varit omoraliskt och jag skulle inte stulit det från någon#
 ;
 Village_person:
 Art/jack.png#
@@ -20,3 +24,11 @@ Art/jane.png#
 <jane>What are you doing in the coal mine?... I can't let you enter without a fight.. or some.. [money]. I'm not a mine safety inspector for free.#
 <player>Do you want to fight Jane Y/N.#
 Jane_combat_scene%
+;
+Janice:
+Art/janice.png#
+Hi i'm Janice the sister great mage Jane#
+I would really like a tup#
+I am also really good at writing dialog#
+And my conversations are reall good.#
+Absolutly normal person#

@@ -94,7 +94,7 @@ class Map:
                 self.loading_zone = []
 
             self.actors = actor.load_sprites(segname, "Level/natan_actors", self.change_state)
-            self.music.change_segname(segname) # idk self.music should alsow be in combat
+            self.music.change_state(segname) # idk self.music should alsow be in combat
 
 
         def render(self, window, player):

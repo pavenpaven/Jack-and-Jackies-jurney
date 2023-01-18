@@ -82,4 +82,10 @@ class Cactus(Sprite):
     size = (20, 28)
     collision = False
 
-SPRITE_CLASSES=[Test, Cactus]
+class Matta(Sprite):
+    texutre = re("Art/mattas.png", (32,32))
+    name="matta"
+    size = (2*tile, 2*tile)
+    collision = False
+
+SPRITE_CLASSES=[Test, Cactus, Matta]

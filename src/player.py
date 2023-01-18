@@ -57,7 +57,7 @@ class Player:
     self.check_loading_zone(pygame.Rect(player_hitbox[0], (self.size[0], self.size[1]/3)), scene) 
 
 
-def check_collision(player_hitbox,scene, player_rect):
+def check_collision(player_hitbox, scene, player_rect):
     tiles = get_touching_tiles(player_hitbox, scene)
     can_go = True
     for i in tiles:
