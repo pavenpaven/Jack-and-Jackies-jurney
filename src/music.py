@@ -21,6 +21,7 @@ class Music:
                 "Pine": conf.conf_search("pine_music"),
                 "Cave": conf.conf_search("cave_music"),
                 "Desert": conf.conf_search("desert_music"),
+                "Title": conf.conf_search("title_music"),
                 }
 
 
@@ -38,7 +39,14 @@ class Music:
             pygame.mixer.music.set_volume(self.volume)
             return True
         return False
-       
+    
+    def increace_volume(self, x):
+        self.volume *= x
+        pygame.mixer.music.set_volume(self.volume)
+    
+    def set_volume(self, x):
+        self.volume = x
+        pygame.mixer.music.set_volume(self.volume)
     
     def theme_name_from_segname(self, segname: str) -> str: # can return None if not found
         for i in self.theme_list:

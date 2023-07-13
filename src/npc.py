@@ -3,6 +3,7 @@ import src.actor as actor
 import src.state as state
 
 DIALOG_TEXT = [[]] # will only be displayed when in dialog state look npc_handler from state_handler
+DIALOG_EXIT_STATE =[None]
 
 def load_npc_dialog(segname, filename):
   with open(filename, "r") as fil:
@@ -24,6 +25,7 @@ class Npc(actor.Sprite):
   size = (20,28)
   collision = True
   interactable = True
+  dialog_exit_state = state.State.OVERWORLD
   
   def startup_process(self, extra):
     x=load_npc_dialog(extra,"Level/npc")
@@ -43,6 +45,7 @@ class Npc(actor.Sprite):
 
   def player_action(self):
     DIALOG_TEXT[0] = self.dialog.copy()
+    DIALOG_EXIT_STATE[0] = self.dialog_exit_state
     self.change_state(state.State.NPC_DIALOG)
     
      

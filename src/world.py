@@ -5,7 +5,7 @@ import src.actor as actor
 import src.npc #order matters
 import src.state as state
 import src.music as music
-
+import src.conf as conf
 
 tile = 30
 
@@ -58,12 +58,11 @@ class Map:
             self.loading_zone = []
             self.actors = []
             self.state = current_state
-            self.music = music.Music("Level/theme_info")
 
         def change_state(self, changed_state: state.State) -> None:
           self.state = changed_state
       
-        def load_room(self, filename, segname):
+        def load_room(self, filename, segname, music):
             segments = get_segname_room(filename, segname)
             if segments == -1:
                 return -1
@@ -94,12 +93,15 @@ class Map:
                 self.loading_zone = []
 
             self.actors = actor.load_sprites(segname, "Level/natan_actors", self.change_state)
-            self.music.change_state(segname) # idk self.music should alsow be in combat
+            music.change_segname(segname) # idk self.music should alsow be in combat
 
 
-        def render(self, window, player):
+        def render(self, window, player, music):
             self.surface.fill((0,0,0))
             #self.surface.blit(self.backgrund_tile, (0,0))
+            if not self.tiles: #yes i know
+                self.load_room(conf.conf_search("starting_filename"), conf.conf_search("starting_segname"), music)
+
             y = 0
             for i in self.tiles:
                 x = 0

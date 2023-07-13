@@ -1,4 +1,5 @@
 import pygame
+import src.state as state
 
 pygame.font.init()
 pygame.display.init()
@@ -26,8 +27,7 @@ def display_text(font, size, text) -> pygame.Surface: #size is size requierment 
         print("Warning text height exeeding bounds")
 
     surface = pygame.Surface((width, height), pygame.SRCALPHA, 32)
-    #surface = surface.convert_alpha()
-    
+    #surface 0
     y_offset = 0
     for i in lines:
         surface.blit(font.render(i, True, (200, 0, 200)), (0, y_offset))
@@ -38,6 +38,7 @@ def display_text(font, size, text) -> pygame.Surface: #size is size requierment 
 
 
 class Text_box:
+  dialog_exit_state = state.State.OVERWORLD
   def __init__(self, rect, font, outline=2):
     self.surface = pygame.Surface(rect.size)
     self.rect = pygame.Rect((0,0), rect.size)
@@ -45,9 +46,10 @@ class Text_box:
     self.outline = outline
     self.font = font
     self.dialog = []
-
+ 
   def advance(self) -> bool: #returns True if end of Text_box
     if not len(self.dialog):
+      self.closing_func()
       return True
     #self.surface.fill((0,0,0))
     #pygame.draw.rect(self.surface, (255,255,255), self.rect, self.outline)
@@ -61,3 +63,6 @@ class Text_box:
       text_surface, (text_rect.x, text_rect.y)
     )
     return False
+    
+  def closing_func(self):
+    pass

@@ -27,37 +27,51 @@ class Combat_scene:
     def __init__(self, players, enemies):
         self.players = players
         self.enemies = enemies
+        self.entity_order = self.players + self.enemies
+        random.shuffle(self.entity_order)
+        self.win = False
+        self.lose = False
 
-    def simulate_tick(self, tick: int, player_turn_func):
-        list_of_entities = self.players + self.enemies
-        random.shuffle(list_of_entities)
-        for i in list_of_entities:
-            i.handle_status_effects(tick)
-            move = i.active_move[0]
-            target = i.active_move[1]
-            activated_tick = i.active_move[2]
-            if move == None:
-                self.turn(i, tick, player_turn_func)
-            else:
-                if tick - activated_tick == move.STARTUP_TIME:
-                    move.fundamental_ontime_func(i, target, tick)
-                if tick - activated_tick >= move.STARTUP_TIME + move.GLOBAL_COOLDOWN:
-                    self.turn(i, tick, player_turn_func)
+    def simulate_sub_tick(self, tick: int, subtick: int, player_move) -> (int, int, combat_unit.Entity): #(tick, subtick, player) player can be None
+        if subtick >= len(self.entity_order):
+            random.shuffle(self.entity_order)
+            return (tick+1, 0, None)
+        
+        entity = self.entity_order[subtick]
+        entity.handle_status_effects(tick)
+        move = entity.active_move[0]
+        target = entity.active_move[1]
+        activated_tick = entity.active_move[2]
+        
+        if move == None:
+            if entity in self.players and not player_move:
+                return (tick, subtick, entity)
+
+            self.turn(entity, tick, player_move)
+        else:
+            if tick - activated_tick >= move.STARTUP_TIME + move.GLOBAL_COOLDOWN:
+                if entity in self.players and not player_move:
+                    return (tick, subtick, entity)
+                self.turn(entity, tick, player_move)
+            if tick - activated_tick == move.STARTUP_TIME:
+                move.fundamental_ontime_func(entity, target, tick, self)
           
         for n,i in enumerate(self.players):
-          if i.health<1:
+          if i.health<=0:
+            self.entity_order.pop(self.entity_order.index(i))
             self.players.pop(n)
         for n,i in enumerate(self.enemies):
-          if i.health<1:
+          if i.health<=0:
+            self.entity_order.pop(self.entity_order.index(i))
             self.enemies.pop(n)
 
         if self.players == []:
           print("you loose")
-          return 0
+          self.lose = True
         if self.enemies == []:
           print("you win")
-          return 0
-        return 1
+          self.win = True
+        return (tick, subtick+1, None)
         
         
     
@@ -106,9 +120,10 @@ class Combat_scene:
               return (move, random.choice(self.players))
 
 
-    def turn(self, unit: combat_unit.Entity, tick: int, player_turn_func):
+    def turn(self, unit: combat_unit.Entity, tick: int, player_move=None):
         if unit in self.players:
-            move_target = player_turn_func(unit, self, tick)
+            #move_target = player_turn_func(unit, self, tick)
+            move_target = player_move
         else:
             move_target = self.enemy_turn(unit, tick)
         if move_target[0].TARGET_ENEMY or move_target[0].TARGET_ALLY:

@@ -6,13 +6,18 @@ import src.actor as actor
 
 tile = world.tile
 
+NOCLIP = [0]
+
 class Player:
-  def __init__(self, pos, filename, proporsion, speed):
+  def __init__(self, pos, filename_left, filename_right, proporsion, speed):
     self.pos = pos
     self.speed = speed
     self.size = proporsion
-    imag = pygame.image.load(filename)
-    self.texture = pygame.transform.scale(imag, (proporsion[0], proporsion[1]))
+    imag_left = pygame.image.load(filename_left)
+    imag_right= pygame.image.load(filename_right)
+    self.texture_left = pygame.transform.scale(imag_left, (proporsion[0], proporsion[1]))
+    self.texture_right = pygame.transform.scale(imag_right, (proporsion[0], proporsion[1]))
+    self.texture = self.texture_right
 
   def render(self):
     pass
@@ -35,26 +40,32 @@ class Player:
     
     
   
-  def check_loading_zone(self, player_hitbox, scene):
+  def check_loading_zone(self, player_hitbox, scene, music):
       x = player_hitbox.collidelistall(list(map(lambda x: x.rect, scene.loading_zone)))
       if x:
         x=x[0] #yes
         lz = scene.loading_zone[x]
-        scene.load_room("Level/natan", lz.segname)
+        scene.load_room("Level/natan", lz.segname, music)
         self.pos = lz.spawn_pos
         
-  def walk(self, vector, scene):
+  def walk(self, vector, scene, music):
     if vector[0] and vector[1]:
         vector[0] *= math.sqrt(2)/2
         vector[1] *= math.sqrt(2)/2 # just dont ansk
     travel_pos = (self.pos[0] + vector[0]*self.speed , self.pos[1]+vector[1]*self.speed)
-    player_hitbox = ((travel_pos[0], travel_pos[1]+20), (travel_pos[0] + self.size[0], travel_pos[1] + (self.size[1]/3)))
-    
-    can_go=check_collision(player_hitbox,scene, (pygame.Rect(player_hitbox[0], (self.size[0], self.size[1]/3))))
-    
+    player_hitbox = ((travel_pos[0]+5, travel_pos[1]+17), (travel_pos[0] + self.size[0], travel_pos[1] + (self.size[1]/3)))
+    if vector[0]>0:
+        self.texture = self.texture_right
+    if vector[0]<0:
+        self.texture = self.texture_left 
+    if not NOCLIP[0]: 
+        can_go=check_collision(player_hitbox,scene, (pygame.Rect(player_hitbox[0], (self.size[0], self.size[1]/3))))
+    else:
+        can_go = True
+
     if can_go:
         self.pos = travel_pos
-    self.check_loading_zone(pygame.Rect(player_hitbox[0], (self.size[0], self.size[1]/3)), scene) 
+    self.check_loading_zone(pygame.Rect(player_hitbox[0], (self.size[0], self.size[1]/3)), scene, music) 
 
 
 def check_collision(player_hitbox, scene, player_rect):
@@ -68,6 +79,9 @@ def check_collision(player_hitbox, scene, player_rect):
       if i.collision:  
         if player_rect.colliderect(pygame.Rect(i.pos,i.size)):
           can_go = False
+      else:
+        if player_rect.colliderect(pygame.Rect(i.pos,i.size)):
+            i.step_on()
         
     return can_go
   

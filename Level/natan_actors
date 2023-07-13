@@ -2,15 +2,15 @@ Three_way:
 test-3,4
 ;
 Spawn:
-npc-7,7-lumber man
 test-6,6
+enemy-7,8
 ;
 Ester_egg_1:
 npc-18,7-Esther
 test-19,8
 ;
 Cave_vzg:
-npc-9,5-Jane
+jane-9,5-Jane
 ;
 Cabin:
 npc-25,4-Jackie

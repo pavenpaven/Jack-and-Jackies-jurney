@@ -4,6 +4,8 @@ import pygame
 import time
 import src.tile_types as tile_types
 import src.world as world
+import src.music as music
+MUSIC = music.Music("Level/theme_info")
 
 pygame.font.init()
 
@@ -56,11 +58,11 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
                 last_pressed=framecount
             if event.type == pygame.QUIT:
                 quit = True
-            return quit
+        return quit
 
     def graphics():
         window.fill((0,0,0))
-        scene.render(window, curser)
+        scene.render(window, curser, MUSIC)
         window.blit(font.render(str(tuple(i/tile for i in curser.pos)), True, (255,255,0)), (10,10))
         pygame.display.update()
             
@@ -83,7 +85,7 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
 
     curser = Curser((1,1), "Art/curser.png")
     scene = world.Map((30,12), (0, tile*2), 1) #wtf state 1 lol      
-    scene.load_room(filename, segname)
+    scene.load_room(filename, segname, MUSIC)
     window = pygame.display.set_mode((900,600))
     pygame.font.init()
     #print(pygame.font.get_fonts())
@@ -99,7 +101,7 @@ def open_level_edit(filename, segname, is_loading_zone_mode = False,lz_segname="
             print(clock.get_fps())
         graphics()
         quit=check_key()
-        if quit == True:
+        if quit:
             scene.save(filename, segname)
             pygame.quit()
             running=False

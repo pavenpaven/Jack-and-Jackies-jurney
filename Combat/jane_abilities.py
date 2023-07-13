@@ -25,7 +25,7 @@ class Heal(ab.Wait_move):
   def mana_cost_of_first_arg(self, arg):
       return arg
 
-  def ontime_func(self, unit, target, tick, *args):
+  def ontime_func(self, unit, target, tick, scene, *args):
     target.apply_status_effect(Heal_effect(target, self.heal), tick)
 
 class Jar_of_bees(ab.Default_move):

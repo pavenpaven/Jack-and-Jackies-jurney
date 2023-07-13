@@ -35,7 +35,7 @@ class Default_move:
   def startup(self, unit, *args):
     pass
 
-  def fundamental_ontime_func(self, unit, target, tick):
+  def fundamental_ontime_func(self, unit, target, tick, scene):
     if self.NUM_ARGS:
         a = self.mana_cost_of_first_arg(self.args[0])
         if a:
@@ -43,9 +43,9 @@ class Default_move:
     if unit.mana < self.MANA_COST:
       raise Exception(f"to little mana for {unit}")
     unit.mana -= self.MANA_COST
-    self.ontime_func(unit, target, tick, *self.args)
+    self.ontime_func(unit, target, tick, scene, *self.args)
 
-  def ontime_func(self, unit, target, tick, *args):
+  def ontime_func(self, unit, target, tick, scene, *args):
     target.take_damage(self.DEFAULT_DAMAGE*unit.strength_multiplier)
     if target.active_move[0].INTERUPTABLE and self.INTERUPTING:
       print(f"move {target.active_move[0]} interupted at tick {tick}")
@@ -100,7 +100,7 @@ class Wait_move(Default_move):
         self.GLOBAL_COOLDOWN = self.args[0]
         self.arg = self.args[0]
 
-    def ontime_func(self, unit, target, tick , *args):
+    def ontime_func(self, unit, target, tick, scene, *args):
       pass
 
 
@@ -113,7 +113,7 @@ class Shoot_move(Default_move):
     INTERUPTING = False
     DESCRIPTION = "Shoot is a strong move but wastes a 'bullet' and also doesnt interupt"
 
-    def ontime_func(self, unit, target, tick, *args):
+    def ontime_func(self, unit, target, tick, scene, *args):
       if len(unit.magasine) ==0:
         raise Exception("To few bullets")
       unit.magasine.pop(0) 
@@ -129,7 +129,7 @@ class Reload(Wait_move):
     self.COOLDOWN = 2*self.args[0]+12
     self.arg = self.args[0]
 
-  def ontime_func(self, unit, target, tick, *args):
+  def ontime_func(self, unit, target, tick, scene, *args):
     for i in range(self.arg):
       if len(unit.magasine) < 6:
         unit.magasine.append(None)
@@ -143,10 +143,10 @@ class Gun_bash(Default_move):
   STUN = 6
   DESCRIPTION = "Long setup but gives Jack a 'bullet'"
 
-  def ontime_func(self, unit, target, tick, *args):
+  def ontime_func(self, unit, target, tick, scene, *args):
     if len(unit.magasine) < 6:
       unit.magasine.append(None)
-    Default_move.ontime_func(self, unit, target, tick, *args)
+    Default_move.ontime_func(self, unit, target, tick, scene, *args)
   
 class Summon(Default_move):
     NAME = "summon"
@@ -154,7 +154,7 @@ class Summon(Default_move):
     GLOBAL_COOLDOWN = 10
     COOLDOWN = 30
     
-    def ontime_func(self, unit, target, tick, *args):
+    def ontime_func(self, unit, target, tick, scene, *args):
         pass
 
 

@@ -6,6 +6,7 @@ import src.fps as fps
 import src.world as world
 import src.state as state
 import state_handler
+import src.music
 
 
 pygame.display.init()
@@ -24,7 +25,8 @@ def main():
   framecount = 0
   last_pressed = 0 
   fps_surface = fps.render_fps(0)
-  current_state = state.State.OVERWORLD
+  current_state = state.State.TITLE
+  music = src.music.Music("Level/theme_info")
   while running:
     clock.tick(30)
     framecount+=1
@@ -33,7 +35,7 @@ def main():
     if framecount % 10 == 0:
         fps_surface=fps.render_fps(clock.get_fps())
 
-    x = state_handler.state_handling(current_state, window, framecount, event_list)
+    x = state_handler.state_handling(current_state, window, framecount, event_list, music)
     state_handler.previous.state = current_state
     current_state = x
     

@@ -1,4 +1,5 @@
 import pygame
+import src.state as state
 
 tile=30
 
@@ -74,7 +75,7 @@ class Test(Sprite):
   texture=re("Art/Flower_1.png", (20,28))
   name="test"
   size=(tile,tile)
-  collision = True
+  collision = False
 
 class Cactus(Sprite):
     texture=re("Art/cactus.png", (22, 32))
@@ -88,4 +89,13 @@ class Matta(Sprite):
     size = (2*tile, 2*tile)
     collision = False
 
-SPRITE_CLASSES=[Test, Cactus, Matta]
+class Enemy(Sprite):
+    texture = re("Art/jane.png", (20,28))
+    name="enemy"
+    size=(20,28)
+    collision = False
+    def step_on(self):
+        self.change_state(state.State.COMBAT)
+
+
+SPRITE_CLASSES=[Test, Cactus, Matta, Enemy]
